@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <LinearLayout
+        android:id="@+id/Logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="65dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgIconeLogo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo" />
+    </LinearLayout>
+
+
+
+
+
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp"
+        android:inputType="textEmailAddress"
+        android:hint="E-mail"
+        android:text=""
+        android:layout_marginTop="45dp"
+        tools:textColor="#5A6978"
+        tools:textSize="14sp"
+        />
+
+
+    <EditText
+        android:id="@+id/txtSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        tools:textColor="#5A6978"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:lineSpacingExtra="14sp"
+        android:selectAllOnFocus="false"
+        android:hint="Senha"
+        tools:textSize="14sp"
+        android:text=""
+        />
+    <Spinner
+        android:id="@+id/spn_tipo_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp">
+
+    </Spinner>
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="#2F3A89"
+        android:text="Logar"
+
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:typeface="normal"
+        tools:background="#4D4D4D"
+        tools:textColor="white" />
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/login"
+        ></com.google.android.gms.common.SignInButton>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/recuperarSenha">
+        <TextView
+            android:id="@+id/txtRecuperarSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:layout_marginLeft="135dp"
+            android:text="Esqueci minha senha!"
+            android:clickable="true"
+            tools:textColor="#4D4D4D"
+            tools:textSize="14sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

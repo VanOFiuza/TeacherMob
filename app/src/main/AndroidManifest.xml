@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pi.br.com.teacher">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_logo_usjt"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/icon_logo_usjt"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.Calendario"></activity>
+        <activity android:name=".activities.PresencaActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SlapshScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.ProfessorMenuActivity" />
+        <activity android:name=".activities.ProfessorChamadaActivity" />
+        <activity android:name=".activities.AlunoMenuACtivity" />
+        <activity android:name=".activities.FaltasDetalhadasAlunoActivity" />
+        <activity android:name=".activities.Main2Activity" />
+    </application>
+
+</manifest>
