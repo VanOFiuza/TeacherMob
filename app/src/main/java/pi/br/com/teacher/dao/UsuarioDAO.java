@@ -14,7 +14,7 @@ public class UsuarioDAO extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     public UsuarioDAO(Context context) {
-        super(context, "teacher", null, 7);
+        super(context, "teacher", null, 8);
 
     }
 

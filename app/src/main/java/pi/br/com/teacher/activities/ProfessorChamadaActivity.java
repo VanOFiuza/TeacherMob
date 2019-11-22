@@ -48,7 +48,7 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
                 String resp = (String) obj;
                 Gson gson = new Gson();
                 JsonArray lista = gson.fromJson(resp, JsonArray.class);
-                AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista);
+                AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista, id);
                 list_alunos.setAdapter(adapter);
             }
         }).execute();
