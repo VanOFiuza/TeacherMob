@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import pi.br.com.teacher.R;
 import pi.br.com.teacher.interfaces.MetodoCallback;
 import pi.br.com.teacher.model.Aula;
+import pi.br.com.teacher.model.UsuarioLogado;
 import pi.br.com.teacher.provider.AtribuirPresencaWebClient;
 
 import android.content.Intent;
@@ -76,7 +77,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
                         Aula aula = gson.fromJson(j.get(i), Aula.class);
                         Log.d("RETORNO",aulaHoje.getData() +"a de hoje "+ aula.getData()+"AULA DA LISTA ");
                         if (aula.getId() == aulaHoje.getId()) {
-                            new AtribuirPresencaWebClient(String.valueOf(aula.getId()), PresencaActivity.this, new MetodoCallback() {
+                            new AtribuirPresencaWebClient(String.valueOf(aula.getId()), UsuarioLogado.usuarioLogin.getRa(),PresencaActivity.this, new MetodoCallback() {
                                 @Override
                                 public void metodo(Object obj) {
                                     Log.d("RETORNO", obj.toString());

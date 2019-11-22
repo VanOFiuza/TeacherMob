@@ -13,8 +13,15 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
 import pi.br.com.teacher.R;
 import pi.br.com.teacher.adapter.AlunosAdpter;
+import pi.br.com.teacher.interfaces.MetodoCallback;
+import pi.br.com.teacher.model.Professor;
+import pi.br.com.teacher.provider.CarregarAlunosChamadaWebClient;
 
 public class ProfessorChamadaActivity extends AppCompatActivity {
 
@@ -28,18 +35,25 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
 
 
         String data = getIntent().getExtras().getString("data");
+        String id = getIntent().getExtras().getString("id");
 
         Log.d("DATAAAAA",data);
 
         list_alunos = (ListView) findViewById(R.id.list_alunos);
         btn_salva_chamada = (ImageView) findViewById(R.id.btn_salva_chamada);
-        List<String> lista = new ArrayList<>();
-        for(int i = 0 ; i<= 15 ; i++){
-            lista.add("BATATA");
-        }
 
-        AlunosAdpter adapter = new AlunosAdpter(this, lista);
-        list_alunos.setAdapter(adapter);
+        new CarregarAlunosChamadaWebClient(this, data, id, new MetodoCallback() {
+            @Override
+            public void metodo(Object obj) {
+                String resp = (String) obj;
+                Gson gson = new Gson();
+                JsonArray lista = gson.fromJson(resp, JsonArray.class);
+                AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista);
+                list_alunos.setAdapter(adapter);
+            }
+        }).execute();
+
+
         btn_salva_chamada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -21,13 +21,15 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
     Resposta resposta;
     private MetodoCallback metodoCallback;
     private String id_aula;
+    private String id_aluno;
 
 
-    public AtribuirPresencaWebClient(String id_aula,Context context, MetodoCallback metodoCallback) {
+    public AtribuirPresencaWebClient(String id_aula,String id_aluno,Context context, MetodoCallback metodoCallback) {
 
         this.context = context;
         this.metodoCallback = metodoCallback;
         this.id_aula = id_aula;
+        this.id_aluno = id_aluno;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("aluno_id", UsuarioLogado.usuarioLogin.getId());
+            postData.put("aluno_id", id_aluno);
             postData.put("aula_id", id_aula);
         } catch (JSONException e) {
             e.printStackTrace();
