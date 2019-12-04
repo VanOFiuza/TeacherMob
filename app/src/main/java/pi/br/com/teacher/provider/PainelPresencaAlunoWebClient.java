@@ -17,6 +17,7 @@ public class PainelPresencaAlunoWebClient extends AsyncTask<Void, Void, String> 
     private MetodoCallback metodoCallback;
 
     Resposta resposta;
+    String id_disciplina;
 
 
     public Context getContext() {
@@ -24,10 +25,11 @@ public class PainelPresencaAlunoWebClient extends AsyncTask<Void, Void, String> 
     }
 
 
-    public PainelPresencaAlunoWebClient(Context context, MetodoCallback metodoCallback) {
+    public PainelPresencaAlunoWebClient(Context context, String id_disciplina, MetodoCallback metodoCallback) {
 
         this.context = context;
         this.metodoCallback = metodoCallback;
+        this.id_disciplina = id_disciplina;
 
 
     }
@@ -47,7 +49,7 @@ public class PainelPresencaAlunoWebClient extends AsyncTask<Void, Void, String> 
         WebClient webClient = new WebClient();
 
 
-        resposta = webClient.post(WebClient.urlServidor + "aluno/presencaDisciplina/"+ UsuarioLogado.usuarioLogin.getRa() +"?disciplinaTurmaId="+UsuarioLogado.usuarioLogin.getId(), null, context, "GET");
+        resposta = webClient.post(WebClient.urlServidor + "aluno/presencaDisciplina/"+ UsuarioLogado.usuarioLogin.getRa() +"?disciplinaTurmaId="+id_disciplina, null, context, "GET");
         Log.d("REQUISIÇÃO: ", resposta.getResponse() +", STATUSCODE : "+ resposta.getStatusCode());
 
 

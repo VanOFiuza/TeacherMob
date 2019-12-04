@@ -22,7 +22,7 @@ public class WebClient {
 
     static java.net.CookieManager msCookieManager = new java.net.CookieManager();
 
-    public static String urlServidor = "http://192.168.0.20:8080/api/";
+    public static String urlServidor = "http://192.168.10.94:8081/api/";
 
     private HttpURLConnection connection;
 

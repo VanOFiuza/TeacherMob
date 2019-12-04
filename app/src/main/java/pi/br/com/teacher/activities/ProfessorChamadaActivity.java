@@ -62,7 +62,7 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
 
                     AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista, id, data);
                     list_alunos.setAdapter(adapter);
-                    edt_presentes.setText(lista.size());
+                    edt_presentes.setText(String.valueOf(lista.size()));
                 }
             }
         }).execute();

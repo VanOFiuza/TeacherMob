@@ -33,6 +33,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
     private Gson gson = new Gson();
     //qr code scanner object
     private IntentIntegrator qrScan;
+    boolean existe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,10 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_presenca);
 
         String aulas = getIntent().getExtras().getString("aulas");
-        JsonArray j = gson.fromJson(aulas, JsonArray.class);
+
+        Log.d("AULAS", aulas);
+         j = gson.fromJson(aulas, JsonArray.class);
+        Log.d("json AULAS", j.toString());
         Aula aulaHoje = new Aula();
 
 
@@ -66,6 +70,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         Log.d("CHEGA AQUIII", "");
         if (result != null) {
             //if qrcode has nothing in it
@@ -79,28 +84,41 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject obj = new JSONObject(result.getContents());
 
                     Aula aulaHoje = gson.fromJson(result.getContents(), Aula.class);
-                    Log.d("CHEGA AQUIII", ""+result.getContents());
                     //setting values to textviews
                     for (int i = 0; i < j.size(); i++) {
 
                         Aula aula = gson.fromJson(j.get(i), Aula.class);
-                        Log.d("RETORNO",aulaHoje.getData() +"a de hoje "+ aula.getData()+"AULA DA LISTA ");
-                        if (aula.getId() == aulaHoje.getId()) {
+                        Log.d("RETORNO",aulaHoje.getId() +"a de hoje "+ aula.getId()+"AULA DA LISTA ");
+                        if (aula.getId().equals(aulaHoje.getId())) {
                             new AtribuirPresencaWebClient(String.valueOf(aula.getId()), UsuarioLogado.usuarioLogin.getRa(),PresencaActivity.this, new MetodoCallback() {
                                 @Override
                                 public void metodo(Object obj) {
-                                    Log.d("RETORNO", obj.toString());
-                                    Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso aqui lucas", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }).execute();
+                                    if(obj != null) {
+                                        Log.d("RETORNO", obj.toString());
+                                        Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso!!", Toast.LENGTH_SHORT).show();
+                                        existe = true;
+                                        finish();
 
-                        } else {
-                            Toast.makeText(this, "não é a aula de hoje " + obj.getString("id"), Toast.LENGTH_SHORT).show();
-                            finish();
+                                    }
+                                    else{
+                                        existe = true;
+                                        Toast.makeText(PresencaActivity.this, "Aluno já possui presença nessa Aula", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+
+                                }
+
+                            }).execute();
+                            break;
                         }
 
                     }
+                    
+                    if(!existe){
+                        Toast.makeText(PresencaActivity.this, "O qr code pertence a essa disciplina", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,7 +126,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
                     //that means the encoded format not matches
                     //in this case you can display whatever data is available on the qrcode
                     //to a toast
-                    Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PresencaActivity.this, "ERRO AO LER QR CODE", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

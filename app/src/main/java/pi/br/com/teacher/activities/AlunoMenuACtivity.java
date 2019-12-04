@@ -66,9 +66,16 @@ public class AlunoMenuACtivity extends AppCompatActivity {
         list_disciplinas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                new PainelPresencaAlunoWebClient(AlunoMenuACtivity.this,  new MetodoCallback() {
+                JsonObject jsonObject = (JsonObject) list_disciplinas.getItemAtPosition(position);
+
+                String id_turma_disciplina = jsonObject.getAsJsonObject("disciplina").get("id").getAsString();
+                Log.d("DISCIPLINA SELECIONADA", id_turma_disciplina);
+
+                new PainelPresencaAlunoWebClient(AlunoMenuACtivity.this, id_turma_disciplina , new MetodoCallback() {
                     @Override
                     public void metodo(Object obj) {
+
+
 
                         String resp = (String) obj;
                         Gson gson = new Gson();

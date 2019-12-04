@@ -2,6 +2,7 @@ package pi.br.com.teacher.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import pi.br.com.teacher.R;
 import pi.br.com.teacher.activities.ProfessorChamadaActivity;
 import pi.br.com.teacher.activities.ProfessorMenuActivity;
 import pi.br.com.teacher.interfaces.MetodoCallback;
+import pi.br.com.teacher.model.Aluno;
+import pi.br.com.teacher.model.Aula;
+import pi.br.com.teacher.model.RespostaTurmaJson;
 import pi.br.com.teacher.provider.AtribuirPresencaWebClient;
 import pi.br.com.teacher.provider.DeletarPresencaWebClient;
 
@@ -71,6 +75,20 @@ public class AlunosAdpter  extends BaseAdapter {
 
         nomeAluno.setText(j.get("nome").getAsString());
         raAluno.setText(j.get("ra").getAsString());
+
+        JsonArray presencas = j.getAsJsonArray("presenca");
+        Aluno alunos = gson.fromJson(lista.get(position), Aluno.class);
+
+
+
+        if (presencas != null) {
+            for (int i = 0; i < presencas.size(); i++) {
+
+               if(data.equals(presencas.get(i).getAsJsonObject().get("data").toString().replace("\"",""))){
+                   presenca.setChecked(true);
+                }
+            }
+        }
 
         presenca.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

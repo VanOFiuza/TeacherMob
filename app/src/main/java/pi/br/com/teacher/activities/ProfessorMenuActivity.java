@@ -148,7 +148,7 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
 
 
         Intent intent = new Intent(ProfessorMenuActivity.this, ProfessorChamadaActivity.class);
-        intent.putExtra("data", "" + ano + "" + mes_str + "" + dia_str);
+        intent.putExtra("data", "" + ano + "-" + mes_str + "-" + dia_str);
         intent.putExtra("id", String.valueOf(disciplinaSelecionada.getDisciplina().getId()).substring(0, 1));
         startActivity(intent);
 

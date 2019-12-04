@@ -48,7 +48,7 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
         Log.d("teste", postData);
 
         resposta = webClient.post(WebClient.urlServidor + "aluno/presenca", postData, context, "POST");
-        Log.d("USUARIO", resposta.getResponse());
+
         return resposta.getResponse();
 
     }
@@ -56,7 +56,7 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        Log.d("USUARIO", s);
+
         metodoCallback.metodo(s);
     }
 }
