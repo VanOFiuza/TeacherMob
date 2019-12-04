@@ -16,7 +16,12 @@ import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialo
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment.OnDateSetListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -63,7 +68,6 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
         }).execute();
 
 
-
         teste = (TextView) findViewById(R.id.teste);
 
         teste.setOnClickListener(new View.OnClickListener() {
@@ -76,12 +80,6 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
         });
 
 
-
-
-
-
-
-
         list_turmas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -90,12 +88,12 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
 //                cdp = new CalendarDatePickerDialogFragment()
 //                        .setOnDateSetListener(ProfessorMenuActivity.this);
 //                cdp.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
+                Gson gson = new Gson();
+                disciplinaSelecionada = gson.fromJson((JsonObject) list_turmas.getItemAtPosition(position), RespostaTurmaJson.class);
 
-                 disciplinaSelecionada = (RespostaTurmaJson) list_turmas.getItemAtPosition(position);
                 cdp = new CalendarDatePickerDialogFragment()
                         .setOnDateSetListener(ProfessorMenuActivity.this);
                 cdp.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
-
 
 
             }
@@ -103,15 +101,16 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
 
 
     }
-    private void dialog_seleciona_tipo_chamada(){
 
-        dialog_tipo_chamdada  = new Dialog(this);
+    private void dialog_seleciona_tipo_chamada() {
+
+        dialog_tipo_chamdada = new Dialog(this);
         dialog_tipo_chamdada.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_tipo_chamdada.setContentView(R.layout.dialog_tipo_chamada);
         dialog_tipo_chamdada.setTitle("My Custom Dialog");
 
-        ll_manual   = (LinearLayout) dialog_tipo_chamdada.findViewById(R.id.ll_manual);
-        ll_qr_code  = (LinearLayout) dialog_tipo_chamdada.findViewById(R.id.ll_qr_code);
+        ll_manual = (LinearLayout) dialog_tipo_chamdada.findViewById(R.id.ll_manual);
+        ll_qr_code = (LinearLayout) dialog_tipo_chamdada.findViewById(R.id.ll_qr_code);
 
         ll_qr_code.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,17 +134,24 @@ public class ProfessorMenuActivity extends AppCompatActivity implements OnDateSe
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int ano, int mes, int dia) {
+        String dia_str, mes_str;
 
-        new CarregarAlunosChamadaWebClient(this, "" + ano + "" + mes + "" + dia, String.valueOf(disciplinaSelecionada.getDisciplina().getId()),
-                new MetodoCallback() {
-                    @Override
-                    public void metodo(Object obj) {
-                        String resp = (String) obj;
-                        Gson gson = new Gson();
-                        JsonArray j = gson.fromJson(resp, JsonArray.class);
-                        Log.d("LOG", resp);
-                    }
-                }).execute();
+        mes ++;
+       if(dia<=9)
+           dia_str = "0"+dia;
+       else
+           dia_str = String.valueOf(dia);
+       if(mes<=9)
+           mes_str = "0"+mes;
+       else
+           mes_str= String.valueOf(mes);
+
+
+        Intent intent = new Intent(ProfessorMenuActivity.this, ProfessorChamadaActivity.class);
+        intent.putExtra("data", "" + ano + "" + mes_str + "" + dia_str);
+        intent.putExtra("id", String.valueOf(disciplinaSelecionada.getDisciplina().getId()).substring(0, 1));
+        startActivity(intent);
+
 
     }
 

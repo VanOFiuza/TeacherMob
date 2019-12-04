@@ -1,9 +1,11 @@
 package pi.br.com.teacher.provider;
 
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +16,7 @@ import pi.br.com.teacher.model.Resposta;
 import pi.br.com.teacher.model.UsuarioLogado;
 import pi.br.com.teacher.model.UsuarioLogin;
 
-public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
+public class DeletarPresencaWebClient extends AsyncTask<Void, Void, String> {
 
     private Context context;
     private ProgressDialog alertDialog;
@@ -24,7 +26,7 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
     private String id_aluno;
 
 
-    public AtribuirPresencaWebClient(String id_aula,String id_aluno,Context context, MetodoCallback metodoCallback) {
+    public DeletarPresencaWebClient(String id_aula,String id_aluno,Context context, MetodoCallback metodoCallback) {
 
         this.context = context;
         this.metodoCallback = metodoCallback;
@@ -47,7 +49,8 @@ public class AtribuirPresencaWebClient extends AsyncTask<Void, Void, String> {
         String postData = "{\"aluno_id\":\""+id_aluno+"\",\"aula_id\":\""+id_aula+"\"}";
         Log.d("teste", postData);
 
-        resposta = webClient.post(WebClient.urlServidor + "aluno/presenca", postData, context, "POST");
+        resposta = webClient.post(WebClient.urlServidor + "aluno/presenca", postData, context, "DELETE");
+
         Log.d("USUARIO", resposta.getResponse());
         return resposta.getResponse();
 

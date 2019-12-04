@@ -43,6 +43,7 @@ import pi.br.com.teacher.dao.UsuarioDAO;
 import pi.br.com.teacher.interfaces.MetodoCallback;
 import pi.br.com.teacher.model.UsuarioLogado;
 import pi.br.com.teacher.model.UsuarioLogin;
+import pi.br.com.teacher.provider.LoginFirebaseWebClient;
 import pi.br.com.teacher.provider.LoginWebClient;
 
 
@@ -226,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                             usuarioLogin.setUsuario(user.getEmail());
                             usuarioLogin.setSenha(user.getUid());
 
-                            new LoginWebClient(LoginActivity.this, usuarioLogin, str_tipo_usuario, new MetodoCallback() {
+                            new LoginFirebaseWebClient(LoginActivity.this, usuarioLogin, str_tipo_usuario, new MetodoCallback() {
                                 @Override
                                 public void metodo(Object obj) {
                                     String resp = (String) obj;

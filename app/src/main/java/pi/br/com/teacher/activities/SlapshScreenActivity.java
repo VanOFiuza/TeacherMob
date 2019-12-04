@@ -27,7 +27,7 @@ public class SlapshScreenActivity extends AppCompatActivity {
         new AutenticarWebClient(this, new MetodoCallback() {
             @Override
             public void metodo(Object obj) {
-                if (obj == null) {
+                if (obj != null) {
 
                     Log.d("NÃO SALVOU NADA ", "");
 

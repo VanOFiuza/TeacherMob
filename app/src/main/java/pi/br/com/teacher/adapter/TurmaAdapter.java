@@ -69,13 +69,13 @@ public class TurmaAdapter  extends BaseAdapter {
 
         RespostaTurmaJson turma = gson.fromJson(lista.get(position), RespostaTurmaJson.class);
 
-        Aula aula =  (Aula) turma.getDisciplina().getAulas().get(0);
+        List<Aula> aula =  (List<Aula> ) turma.getDisciplina().getAulas();
 
         txtDiadasemanaTurmaProfessor.setText(turma.getDisciplina().getDiasDaSemana());
-        txt_horario_aula_turma.setText(aula.getHorario());
+        txt_horario_aula_turma.setText(aula.get(0).getHorario());
         cursoTurmaProfessor.setText(j.get("disciplina").getAsJsonObject().get("disciplina").getAsJsonObject().get("nome").getAsString().toUpperCase()+" "+ turma.getTurma().toUpperCase());
-        txt_unidade_turma_professor.setText(turma.getDisciplina().getUnidade());
-
+       txt_unidade_turma_professor.setText(turma.getDisciplina().getUnidade());
+//
 
 
 

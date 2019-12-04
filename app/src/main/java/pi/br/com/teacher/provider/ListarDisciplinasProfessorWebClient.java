@@ -47,7 +47,6 @@ public class ListarDisciplinasProfessorWebClient extends AsyncTask<Void, Void, S
 
 
         resposta = webClient.post(WebClient.urlServidor + "/disciplinasProfessor/1" , null, context, "GET");
-        Log.d("REQUISIÇÃO: ", resposta.getResponse() +", STATUSCODE : "+ resposta.getStatusCode());
 
 
         return resposta.getResponse();

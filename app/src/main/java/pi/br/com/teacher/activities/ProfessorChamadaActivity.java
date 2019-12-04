@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
 
     private ListView list_alunos;
     private ImageView btn_salva_chamada;
+    private TextView edt_presentes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
 
         String data = getIntent().getExtras().getString("data");
         String id = getIntent().getExtras().getString("id");
+
+        edt_presentes = (TextView) findViewById(R.id.edt_presentes);
 
         Log.d("DATAAAAA",data);
 
@@ -48,8 +53,17 @@ public class ProfessorChamadaActivity extends AppCompatActivity {
                 String resp = (String) obj;
                 Gson gson = new Gson();
                 JsonArray lista = gson.fromJson(resp, JsonArray.class);
-                AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista, id);
-                list_alunos.setAdapter(adapter);
+
+
+                if(lista == null){
+                    Toast.makeText(ProfessorChamadaActivity.this, "NENHUMA AULA CADASTRADA", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+
+                    AlunosAdpter adapter = new AlunosAdpter(ProfessorChamadaActivity.this, lista, id, data);
+                    list_alunos.setAdapter(adapter);
+                    edt_presentes.setText(lista.size());
+                }
             }
         }).execute();
 

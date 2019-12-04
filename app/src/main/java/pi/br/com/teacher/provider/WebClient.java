@@ -22,7 +22,7 @@ public class WebClient {
 
     static java.net.CookieManager msCookieManager = new java.net.CookieManager();
 
-    public static String urlServidor = "http://192.168.10.94:8081/api/";
+    public static String urlServidor = "http://192.168.0.20:8080/api/";
 
     private HttpURLConnection connection;
 
@@ -32,11 +32,13 @@ public class WebClient {
             resposta.setResponse("NÃO CONECTADO");
             return resposta;
         }
-        try {
+     try {
+
+
 
             URL url = new URL(strUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
+            Log.d("URL", strUrl);
 
             if (msCookieManager.getCookieStore().getCookies().size() > 0) {
                 // While joining the Cookies, use ',' or ';' as needed. Most of the servers are using ';'
@@ -90,16 +92,20 @@ public class WebClient {
 
                 resposta.setStatusCode(connection.getResponseCode());
                 resposta.setResponse(respostaReq);
+                Log.d("USUARIO", resposta.getResponse());
                 return resposta;
             } else {
-                return null;
+                Log.d("USUARIO", resposta.getResponse());
+                return resposta;
+
             }
 
-        } catch (Exception e) {
+     }catch (Exception e){
 
-            throw new RuntimeException(e);
-        }
+     }
 
+        Log.d("USUARIO", resposta.toString());
+        return resposta;
     }
 
     public static boolean isConected(Context cont) {

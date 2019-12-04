@@ -1,6 +1,7 @@
 package pi.br.com.teacher.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +18,25 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import pi.br.com.teacher.R;
+import pi.br.com.teacher.activities.ProfessorChamadaActivity;
+import pi.br.com.teacher.activities.ProfessorMenuActivity;
 import pi.br.com.teacher.interfaces.MetodoCallback;
 import pi.br.com.teacher.provider.AtribuirPresencaWebClient;
+import pi.br.com.teacher.provider.DeletarPresencaWebClient;
 
 
 public class AlunosAdpter  extends BaseAdapter {
 
     private Context context;
     private JsonArray lista;
-    private String id_aula;
+    private String id_aula, data;
 
-    public AlunosAdpter(Context context,JsonArray lista, String id_aula ) {
+    public AlunosAdpter(Context context,JsonArray lista, String id_aula, String data ) {
 
         this.context = context;
         this.lista =lista;
         this.id_aula = id_aula;
+        this.data = data;
 
 
     }
@@ -70,13 +75,21 @@ public class AlunosAdpter  extends BaseAdapter {
         presenca.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if (isChecked){
+          if (isChecked){
                     new AtribuirPresencaWebClient(id_aula, j.get("ra").getAsString(), context, new MetodoCallback() {
                         @Override
                         public void metodo(Object obj) {
-                            Toast.makeText(context, "PRESENÇA ATRIBUIDA", Toast.LENGTH_SHORT).show();
+                          atualizaActivity();
                         }
                     }).execute();
+               }else{
+                   new DeletarPresencaWebClient(id_aula, j.get("ra").getAsString(), context, new MetodoCallback() {
+                       @Override
+                       public void metodo(Object obj) {
+                           atualizaActivity();
+                           Toast.makeText(context, "PRESENÇA RETIRADA", Toast.LENGTH_SHORT).show();
+                       }
+                   }).execute();
                }
             }
         });
@@ -84,6 +97,17 @@ public class AlunosAdpter  extends BaseAdapter {
 
 
         return view;
+
+    }
+    private void atualizaActivity (){
+
+        Intent intent = new Intent(context, ProfessorChamadaActivity.class);
+        intent.putExtra("data", data);
+        intent.putExtra("id", id_aula);
+        ((ProfessorChamadaActivity) context).finish();
+        context.startActivity(intent);
+
+
 
     }
 }

@@ -2,7 +2,8 @@ package pi.br.com.teacher.model;
 
 import java.io.Serializable;
 
-public class Aula implements Serializable {
+public class Aula implements  Serializable
+{
 	private String data;
 
 	private String horario;

@@ -56,14 +56,22 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
         qrScan.initiateScan();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     //Getting the scan results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Log.d("CHEGA AQUIII", "");
         if (result != null) {
             //if qrcode has nothing in it
             if (result.getContents() == null) {
-                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
+                Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 //if qr contains data
                 try {
@@ -71,6 +79,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject obj = new JSONObject(result.getContents());
 
                     Aula aulaHoje = gson.fromJson(result.getContents(), Aula.class);
+                    Log.d("CHEGA AQUIII", ""+result.getContents());
                     //setting values to textviews
                     for (int i = 0; i < j.size(); i++) {
 
@@ -99,7 +108,8 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
                     //that means the encoded format not matches
                     //in this case you can display whatever data is available on the qrcode
                     //to a toast
-                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         } else {
@@ -110,6 +120,7 @@ public class PresencaActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         //initiating the qr code scan
-
+        Toast.makeText(PresencaActivity.this, "Presença atribuida com sucesso ", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
